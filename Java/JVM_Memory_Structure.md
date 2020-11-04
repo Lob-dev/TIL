@@ -1,5 +1,11 @@
 2020.10.05
 
+<br/>
+
+
+<img src="./../image/Java-Memory-Management-comparison-27.png" width="90%"></img>
+
+
 **JVM의 메모리 구조는 pc register, Stack, Heap, Meta,** **Native Method Stack** 가 존재합니다.
 
 <br/>
