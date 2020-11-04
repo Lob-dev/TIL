@@ -64,3 +64,47 @@ System.out.println(str1.equals(str2));
 
 ```
 
+<br/>
+
+2020.10.29
+
+참조형과 기본형 차이 
+
+<br/>
+
+**Primitive Type** 
+
+- Null을 다루지 못한다.
+
+    ( 직렬화 되어 날라오는 JSON 데이터의 프로퍼티가 NULL일 경우 0으로 변환된다.)
+
+- 제네릭을 사용할 수 없다.
+- 스택 영역에서 값을 저장하고 다룰 수 있다.
+
+<br/>
+
+**Reference Type (Wrapper Class)**
+
+- Null을 다룰수 있다.
+- 제네릭을 사용할 수 있다.
+- 별도의 **식별값(Identity)** 을 가진다. = hashcode() [**default : 내부 메모리 주소 → 숫자**]
+- 스택 영역에 변수를 만들고 힙에서 객체를 생성하여 해당 참조 값을 저장한다.
+
+<br/>
+
+**Reference Type를 사용하지 말아야 할 이유?**
+
+- **별도의 식별 값** 때문에 동일성 비교를 하게될 경우 **예상하지 못한 값**을 나타내게 된다.
+- Null을 박싱하고 있는 **Refernce Type을 Primitive Type과 연산**할 경우 **NPE이 발생한다.**
+- **Null을 저장 가능하기에 NPE가 발생할 CASE가 많이 존재한다.**
+- **Primitive Type 과 혼용할 경우 연산 시 오토, 언박싱으로 인해 성능 저하가 발생한다.**
+
+<br/>
+
+**Reference Type 을 사용할 만한 상황은..?**
+
+- Validation? → 프론트 단의 값을 받아올 때 Null을 검증하여야 한다면 사용한다?
+
+    Form 객체로 받아와서 검증하고 Null 이 있을 경우 에러를 반환하며, 값이 올바를 경우 기본 타입을 지니는 VO나 DTO에 값을 저장해도 되지 않을까?
+
+- DataBase 에서 Null을 저장하고 있다면 해당 부분을 검증하기 위해서? Entity..?
