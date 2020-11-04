@@ -10,7 +10,7 @@
 
   + String Builder와 String Buffer는 가변으로 디자인이 되어있다.
   + String Builder와 String Buffer의 차이는 메서드의 synchronized 키워드 유무의 차이일 뿐이다.
-  + synchronized 메서드는 한번에 하나의 쓰레드 만 접근 가능하다. 그 외의 쓰레드는 Wait Queue에서 대기하기 때문에 Builder 보다 성능상 좋지 않은 것이다.
+  + Buffer에 존재하는 synchronized 키워드 메서드는 한번에 하나의 쓰레드 만 접근 가능하다. 그 외의 쓰레드는 Wait Queue에서 대기하기 때문에 Builder 보다 성능상 좋지 않은 것이다.
 
 <br/>
 
