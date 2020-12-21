@@ -342,6 +342,96 @@ parameters:
 
 <br/>
 
-### 참고, 예시코드 출
+
+## springdoc-openapi. 사용법
+
+<br/>
+
+**Gradle 의존성** 
+
+```java
+implementation("org.springdoc:springdoc-openapi-ui:1.4.6")
+```
+
+<br/>
+
+**Java Configuration 추가하기**
+
+```java
+@Configuration
+public class OpenApiConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .components(new Components())
+                .info(new Info().title("XXX Application API").description(
+                        "XXX Application Descrptions.."));
+    }
+}
+```
+
+<br/>
+
+**Sample Controller**
+
+```java
+@RestController
+@RequestMapplng(path = "/posts")
+@Tag(name = "Domain API Names", description = "API Description")
+public class HelloController {
+
+		@Operation(summary = "Find User by id", description = "ID serach by ID = {id} format"
+							,tags = {"Domain API Names"})
+		@ApiResponse(responseCode = "200", desription = "Status Code Description",
+							, content = (array = @ArraySchema(schema = @Schema(implementation = Post.class)))
+		@GetMapping(value = "/{postId}", produces = { "application/json", "application/xml" })
+		public ResponseEntity<List<Contact>> findById(
+				@Parameter(description="Id of the Post for search.") @Pathvariable Long postId){
+				Post postsById = PostService.findById(postId);
+				return ResponseEntity.status(HttpStatus.OK).body(postsById);
+		}
+}
+```
+
+<br/>
+
+### **Open API Annotation** 
+
+<br/>
+
+**@Tag ( spring fox = @Api )** 
+
+- name : 컨트롤러의 도메인 이름 (PostController의 경우 Post)
+- description : Name에 대한 설명
+
+**@Operation ( spring fox = @ApiOperation)**
+
+- summary :  해당 메서드의 동작 정보 요약
+- description : 해당 동작의 설명
+- tags : 상단에 정의된 Tag의 name과 동일하게 주는 값
+
+**@ApiResponse**
+
+- responseCode : 성공시 전달할 HTTP Status Code
+- desription : 해당 Code 에 대한 설명
+- content : 응답되는 컨텐츠 유형 설정
+    - array : 단일이 아닌 복수의 자원 응답이 있을 경우 사용
+
+**@ArraySchema**
+
+- schema : 복수 자원 응답시 내부에 저장되는 리소스 설정
+
+**@Schema ( spring fox = @ApiModel, @ApiModelProperty)**
+
+- implementation : 반환되는 DTO, Entity 를 .class 형식으로 연동 (구조 상속)
+
+**@Parameter ( spring fox = @ApiIgnore, @ApiImplicitParam, @ApiParam)**
+
+- description : 해당 URL에 대한 Pathvariable, Query Parameter 설명
+
+<br/>
+
+### 참고, 예시코드 출처
 
 - [https://swagger.io/specification/#license-object](https://swagger.io/specification/#license-object)
